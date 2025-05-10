@@ -1,5 +1,7 @@
 package src;
 
+import java.util.Random;
+
 public class Cat {
     String name;
     double age;
@@ -48,6 +50,18 @@ public class Cat {
         health = Math.min(100, health + inc);
         mood = Math.min(100, mood + inc);
         satiety = Math.max(0, satiety - dec);
+    }
+    public void nextDay(Random rand) {
+        // health: +1 to +5
+        health = Math.min(100, health + 1 - rand.nextInt(5));
+
+        // mood: -3 to +3
+        mood += rand.nextInt(7) - 3;
+        mood = Math.max(0, Math.min(100, mood));
+
+        // satiety: -3 to +3
+        satiety += rand.nextInt(7) - 3;
+        satiety = Math.max(0, Math.min(100, satiety));
     }
 
     public double getAverage() {
