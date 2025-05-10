@@ -26,9 +26,55 @@ public class Main {
 
             cats.add(new Cat(name, age, health, mood, satiety));
         }
-        cats.sort(Comparator.comparingDouble(Cat::getAverage).reversed());
-        
-        printTable(cats);
+        while (true) {
+            cats.sort(Comparator.comparingDouble(Cat::getAverage).reversed());
+            printTable(cats);
+
+            System.out.println("Выберите кошку по номеру или имени (или введите 'exit' для выхода): ");
+            String input = scanner.nextLine();
+
+            if (input.equalsIgnoreCase("exit")) break;
+
+            Cat selectedCat = null;
+
+            try {
+                int index = Integer.parseInt(input);
+                if (index >= 1 && index <= cats.size()) {
+                    selectedCat = cats.get(index - 1);
+                }
+            } catch (NumberFormatException e) {
+                for (Cat cat : cats) {
+                    if (cat.name.equalsIgnoreCase(input)) {
+                        selectedCat = cat;
+                        break;
+                    }
+                }
+            }
+
+            if (selectedCat == null) {
+                System.out.println("Кошка не найдена. Попробуйте снова.");
+                continue;
+            }
+
+            System.out.println("Выберите действие: feed | play | heal");
+            String action = scanner.nextLine().toLowerCase();
+
+            switch (action) {
+                case "feed":
+                    selectedCat.feed();
+                    break;
+                case "play":
+                    selectedCat.play();
+                    break;
+                case "heal":
+                    selectedCat.heal();
+                    break;
+                default:
+                    System.out.println("Неизвестное действие.");
+            }
+        }
+
+        System.out.println("Программа завершена.");
     }
 
     public static void printTable(List<Cat> cats) {

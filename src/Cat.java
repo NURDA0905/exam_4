@@ -18,4 +18,15 @@ public class Cat {
     public double getAverage() {
         return (health + mood + satiety) / 3.0;
     }
+    public void feed() {
+        satiety = Math.min(100, satiety + 10);
+    }
+
+    public void play() {
+        mood = Math.min(100, mood + 10);
+    }
+
+    public void heal() {
+        health = Math.min(100, health + 10);
+    }
 }
