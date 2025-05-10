@@ -13,6 +13,7 @@ public class FormatTable {
 
         int index = 1;
         for (Cat cat : cats) {
+            String nameDisplay = cat.actedToday ? cat.name + "*" : cat.name;
             System.out.printf(format,
                     index++,
                     cat.name,

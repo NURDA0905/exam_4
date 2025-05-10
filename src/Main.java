@@ -10,7 +10,7 @@ public class Main {
 
         System.out.print("Введите количество кошек: ");
         int numberOfCats = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         for (int i = 0; i < numberOfCats; i++) {
             System.out.printf("Введите имя кошки %d: ", i + 1);
@@ -18,19 +18,20 @@ public class Main {
 
             System.out.printf("Введите возраст кошки %d: ", i + 1);
             double age = scanner.nextDouble();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
 
-            double health = 20 + random.nextInt(61);   // 20 to 80
+            double health = 20 + random.nextInt(61);
             double mood = 20 + random.nextInt(61);
             double satiety = 20 + random.nextInt(61);
 
             cats.add(new Cat(name, age, health, mood, satiety));
         }
+
         while (true) {
             cats.sort(Comparator.comparingDouble(Cat::getAverage).reversed());
             FormatTable.printTable(cats);
 
-            System.out.println("Выберите кошку по номеру или имени (или введите 'exit' для выхода): ");
+            System.out.println("Выберите кошку по номеру или имени (или введите 'nextday' или 'exit'):");
             String input = scanner.nextLine();
 
             if (input.equalsIgnoreCase("exit")) break;
@@ -52,7 +53,7 @@ public class Main {
                 }
             } catch (NumberFormatException e) {
                 for (Cat cat : cats) {
-                    if (cat.name.equalsIgnoreCase(input)) {
+                    if (cat.name.equalsIgnoreCase(input.replace("*", ""))) {
                         selectedCat = cat;
                         break;
                     }
@@ -61,6 +62,11 @@ public class Main {
 
             if (selectedCat == null) {
                 System.out.println("Кошка не найдена. Попробуйте снова.");
+                continue;
+            }
+
+            if (selectedCat.actedToday) {
+                System.out.println("Вы уже взаимодействовали с этой кошкой сегодня.");
                 continue;
             }
 

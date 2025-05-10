@@ -8,6 +8,7 @@ public class Cat {
     double health;
     double mood;
     double satiety;
+    boolean actedToday = false;
 
     public Cat(String name, double age, double health, double mood, double satiety) {
         this.name = name;
@@ -33,7 +34,8 @@ public class Cat {
         int inc = getIncreaseAmount();
         health = Math.min(100, health + inc);
         mood = Math.min(100, mood + inc);
-        // no satiety decrease in feed
+        actedToday = true;
+
     }
 
     public void play() {
@@ -42,6 +44,7 @@ public class Cat {
         health = Math.min(100, health + inc);
         mood = Math.min(100, mood + inc);
         satiety = Math.max(0, satiety - dec);
+        actedToday = true;
     }
 
     public void heal() {
@@ -50,18 +53,19 @@ public class Cat {
         health = Math.min(100, health + inc);
         mood = Math.min(100, mood + inc);
         satiety = Math.max(0, satiety - dec);
+        actedToday = true;
     }
     public void nextDay(Random rand) {
-        // health: +1 to +5
+
         health = Math.min(100, health + 1 - rand.nextInt(5));
 
-        // mood: -3 to +3
         mood += rand.nextInt(7) - 3;
         mood = Math.max(0, Math.min(100, mood));
 
-        // satiety: -3 to +3
         satiety += rand.nextInt(7) - 3;
         satiety = Math.max(0, Math.min(100, satiety));
+
+        actedToday = false;
     }
 
     public double getAverage() {
