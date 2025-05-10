@@ -1,16 +1,31 @@
 package src;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Comparator;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
         List<Cat> cats = new ArrayList<>();
-        cats.add(new Cat("Peach", 11, 78, 86, 50));
-        cats.add(new Cat("Jasper", 12, 83, 39, 43));
-        cats.add(new Cat("Poppy", 9, 38, 57, 71));
 
+        System.out.print("Введите количество кошек: ");
+        int numberOfCats = scanner.nextInt();
+        scanner.nextLine(); // consume newline
+
+        for (int i = 0; i < numberOfCats; i++) {
+            System.out.printf("Введите имя кошки %d: ", i + 1);
+            String name = scanner.nextLine();
+
+            System.out.printf("Введите возраст кошки %d: ", i + 1);
+            double age = scanner.nextDouble();
+            scanner.nextLine(); // consume newline
+
+            double health = 20 + random.nextInt(61);   // 20 to 80
+            double mood = 20 + random.nextInt(61);
+            double satiety = 20 + random.nextInt(61);
+
+            cats.add(new Cat(name, age, health, mood, satiety));
+        }
         cats.sort(Comparator.comparingDouble(Cat::getAverage).reversed());
         
         printTable(cats);
